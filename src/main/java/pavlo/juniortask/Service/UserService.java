@@ -40,5 +40,8 @@ public class UserService implements UserDetailsService {
         file.transferTo(new File(path + file.getOriginalFilename()));
     }
 
+    public User findById(int id){
+       return userDao.getOne(id);
+    }
 
 }

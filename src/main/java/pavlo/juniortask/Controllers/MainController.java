@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import pavlo.juniortask.Model.User;
 import pavlo.juniortask.Service.UserService;
 
 import javax.persistence.ManyToOne;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -45,9 +48,19 @@ public String save (User user, Model model){
     @PostMapping("/successURL")
     public String succes (Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User auth = (User) authentication.getPrincipal();
+        model.addAttribute("user",auth);
 
-        System.out.println(authentication);
-        model.addAttribute("user",authentication.getName());
+        return "CurrentUser";
+    }
+
+    @PostMapping("/addAvatar")
+    public String img (@RequestParam("img") MultipartFile file) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User auth = (User) authentication.getPrincipal();
+        auth.setImg(file.getOriginalFilename());
+        userService.transfer(file);
+        userService.save(auth);
         return "CurrentUser";
     }
 }
