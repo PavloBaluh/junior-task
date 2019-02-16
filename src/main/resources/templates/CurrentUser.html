@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<form id="fm1">
+    <input type="file" id="img" name="img" value="select picture">
+    <button id="btn">add avatar</button>
+</form>
+<h1 th:text="hello_+ ${user}"></h1>
+
+
+<script>
+$('#btn').click(function () {
+     $.ajax({
+       url: "/addAvatar",
+       type: "POST",
+       data: new FormData($("#fm1")[0]),
+       enctype: 'multipart/form-data',
+       processData: false,
+       contentType: false,
+       cache: false,
+       success: function (ok) {
+           console.log(ok)
+       },
+       error: function (err) {
+         console.log(err);
+       }
+     });
+
+})
+
+</script>
+</body>
+</html>
