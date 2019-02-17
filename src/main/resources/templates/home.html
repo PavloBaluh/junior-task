@@ -9,9 +9,10 @@
 
 <div th:text="${exist}"></div>
 
-<form th:action="@{/saveUser}" method="post">
-    <input type="text" name="username" placeholder="username">
-    <input type="text" name="password" placeholder="password">
+<form th:action="@{/saveUser}" method="post" th:object="${user}">
+    <input type="text" th:field="*{username}" placeholder="username">
+    <input type="password" th:field="*{password}" placeholder="password">
+    <input type="email" th:field="*{emails}" placeholder="enter your email">
     <input type="submit" value="press me!">
 </form>
 

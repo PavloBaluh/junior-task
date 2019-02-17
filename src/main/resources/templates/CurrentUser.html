@@ -8,15 +8,17 @@
 </head>
 <body>
 
+<h1 th:text="'hello ' + ${user.username}"></h1>
+<img th:src="@{'/ava/' + ${user.img}}">
+
+
+
 
 
 <form th:action="@{/addAvatar}" method="post" enctype="multipart/form-data">
     <input type="file" id="img" name="img" value="select picture">
     <button id="btn">add avatar</button>
 </form>
-
-<h1 th:text="'hello ' + ${user.username}"></h1>
-<img th:src="@{'/ava/' + ${user.img}}">
 
 </body>
 </html>
