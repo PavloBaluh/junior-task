@@ -49,8 +49,8 @@ public String save (User user, Model model){
     email.setUser(user);
     emailService.save(email);
     userService.save(user);
-
-    return "login";
+    emailService.send(email.getEmail(),user.getUsername());
+    return "Send";
 }
 
     @PostMapping("/successURL")
@@ -58,18 +58,26 @@ public String save (User user, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User auth = (User) authentication.getPrincipal();
         model.addAttribute("user",auth);
-
         return "CurrentUser";
     }
 
     @PostMapping("/addAvatar")
-    public String img (@RequestParam("img") MultipartFile file) throws IOException {
+    public String img (@RequestParam("img") MultipartFile file,Model model) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User auth = (User) authentication.getPrincipal();
+        model.addAttribute("user",auth);
         auth.setImg(file.getOriginalFilename());
         userService.transfer(file);
         userService.save(auth);
         return "CurrentUser";
+    }
+
+    @GetMapping("/confirm")
+    public String confirm (@RequestParam("username") String username){
+        User byUsername = userService.findByUsername(username);
+        byUsername.setEnabled(true);
+        userService.save(byUsername);
+        return "goodConfirm";
     }
 
 

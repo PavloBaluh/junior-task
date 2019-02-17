@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      protected void configure(HttpSecurity http) throws Exception {
          http
                  .authorizeRequests()
-//                 .antMatchers(HttpMethod.POST,"/addAvatar").permitAll()
+                 .antMatchers("/confirm").permitAll()
                  .antMatchers(HttpMethod.POST,"/saveUser").permitAll()
                  .antMatchers("/", "/home").permitAll()
                  .anyRequest().authenticated()

@@ -1,6 +1,10 @@
 package pavlo.juniortask.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import pavlo.juniortask.Dao.UserDao;
 import pavlo.juniortask.Model.User;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +24,10 @@ import java.util.List;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserDao userDao;
+
+    public User findByUsername(String username){
+        return userDao.findByUsername(username);
+    }
 
     public void save(User user){
         if (!user.getUsername().isEmpty()){
@@ -43,5 +54,7 @@ public class UserService implements UserDetailsService {
     public User findById(int id){
        return userDao.getOne(id);
     }
+
+
 
 }

@@ -53,7 +53,7 @@ public class User implements UserDetails {
         return isCredentialsNonExpired;
     }
 
-    private boolean isEnabled =  true;
+    private boolean isEnabled =  false;
     @Override
     public boolean isEnabled() {
         return isEnabled;
