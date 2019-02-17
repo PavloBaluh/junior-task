@@ -45,8 +45,11 @@ public String save (User user, Model model){
         }
     }
     user.setPassword( encoder.encode(user.getPassword()));
+    Email email = user.getEmails().get(0);
+    email.setUser(user);
+    emailService.save(email);
     userService.save(user);
-    emailService.save(new Email(user));
+
     return "login";
 }
 
